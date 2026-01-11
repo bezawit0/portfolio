@@ -1,3 +1,4 @@
+/* ===== GLOBAL ===== */
 * {
   margin: 0;
   padding: 0;
@@ -6,9 +7,43 @@
   scroll-behavior: smooth;
 }
 
+:root {
+  --primary: #ffd369;
+  --bg-dark: #020617;
+  --bg-mid: #0f172a;
+  --glass: rgba(255, 255, 255, 0.12);
+  --text: #ffffff;
+}
+
 body {
-  background: linear-gradient(120deg, #1f1c2c, #928dab);
-  color: white;
+  color: var(--text);
+  background: linear-gradient(270deg, var(--bg-dark), var(--bg-mid), var(--bg-dark));
+  background-size: 600% 600%;
+  animation: bgMove 18s ease infinite;
+  overflow-x: hidden;
+}
+
+/* ===== BACKGROUND MOTION ===== */
+.bg-shape {
+  position: fixed;
+  width: 220px;
+  height: 220px;
+  background: rgba(255, 211, 105, 0.18);
+  filter: blur(80px);
+  border-radius: 50%;
+  z-index: -1;
+  animation: floatBg 10s ease-in-out infinite;
+}
+
+.bg-shape.one {
+  top: 10%;
+  left: 5%;
+}
+
+.bg-shape.two {
+  bottom: 15%;
+  right: 10%;
+  animation-delay: 4s;
 }
 
 /* ===== NAVBAR ===== */
@@ -20,13 +55,13 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(10px);
+  background: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(12px);
   z-index: 1000;
 }
 
 .logo {
-  color: #ffd369;
+  color: var(--primary);
 }
 
 nav ul {
@@ -37,19 +72,39 @@ nav ul {
 
 nav ul li a {
   text-decoration: none;
-  color: white;
-  font-weight: bold;
+  color: var(--text);
+  font-weight: 600;
+  transition: 0.3s;
 }
 
 nav ul li a:hover {
-  color: #ffd369;
+  color: var(--primary);
 }
 
-/* 3-dot icon */
+/* ===== MOBILE MENU ===== */
 .menu-icon {
   display: none;
   font-size: 26px;
   cursor: pointer;
+}
+
+/* ===== SECTIONS ===== */
+section {
+  padding: 90px 10%;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.8s ease;
+}
+
+section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--primary);
 }
 
 /* ===== HOME ===== */
@@ -58,51 +113,48 @@ nav ul li a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 80px;
 }
 
 .home-content {
-  background: rgba(255,255,255,0.1);
+  background: var(--glass);
   padding: 40px;
-  border-radius: 20px;
+  border-radius: 24px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  animation: fadeUp 1.2s ease;
 }
 
 .profile-pic {
   width: 150px;
   border-radius: 50%;
-  border: 4px solid white;
+  border: 4px solid var(--primary);
   margin-bottom: 20px;
 }
 
 span {
-  color: #ffd369;
-}
-
-/* ===== SECTIONS ===== */
-section {
-  padding: 80px 10%;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #ffd369;
+  color: var(--primary);
 }
 
 /* ===== SKILLS & COURSES ===== */
-.skill-box, .course-box {
+.skill-box,
+.course-box {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
 }
 
-.skill-card, .course-card {
-  background: rgba(255,255,255,0.12);
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+.skill-card,
+.course-card {
+  background: var(--glass);
+  padding: 22px;
+  border-radius: 22px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  transition: 0.4s ease;
+}
+
+.skill-card:hover,
+.course-card:hover {
+  transform: translateY(-8px) scale(1.02);
 }
 
 /* ===== CONTACT ===== */
@@ -110,23 +162,64 @@ h2 {
   text-align: center;
 }
 
+.contact-info p {
+  margin: 10px 0;
+}
+
+.contact-info a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
 form {
-  max-width: 400px;
+  max-width: 420px;
   margin: 30px auto;
 }
 
-input, textarea, button {
+input,
+textarea,
+button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-bottom: 15px;
-  border-radius: 10px;
+  border-radius: 14px;
   border: none;
+  outline: none;
 }
 
 button {
-  background: #ffd369;
+  background: var(--primary);
   font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floatBg {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-40px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ===== MOBILE VIEW ===== */
@@ -137,17 +230,29 @@ button {
 
   nav ul {
     position: absolute;
-    top: 60px;
+    top: 65px;
     right: 8%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(2, 6, 23, 0.95);
     flex-direction: column;
-    width: 180px;
+    width: 190px;
     padding: 20px;
-    border-radius: 15px;
+    border-radius: 18px;
     display: none;
+    animation: menuFade 0.4s ease;
   }
 
   nav ul.show {
     display: flex;
+  }
+}
+
+@keyframes menuFade {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
